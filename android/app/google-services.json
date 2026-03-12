@@ -1,0 +1,284 @@
+{
+  "project_info": {
+    "project_number": "1082846160023",
+    "project_id": "advanced-chatapp-edee7",
+    "storage_bucket": "advanced-chatapp-edee7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082846160023:android:faab6e3914c717ed1cb5d2",
+        "android_client_info": {
+          "package_name": "com.example.wa_business"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082846160023-bvfvpn8rvk0tgb4ftlq9av3dnk8627kq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wa_business",
+            "certificate_hash": "c376d93723d0f9da5fd9e2cf4f5ee207063db2b0"
+          }
+        },
+        {
+          "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPT2Mf8l0cA-vw2r1wHSVZASslEtI9iI0"
+        },
+        {
+          "current_key": "AIzaSyBRU79o-ZAayrl23eJ9wHIftgrwfvNOLiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1082846160023-0hu6buugngnmg4knnermsgvghebvnph7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kmshopnow.pos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082846160023:android:eae26a8a6d56a2341cb5d2",
+        "android_client_info": {
+          "package_name": "com.goride.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082846160023-gt8i5ruvh50atk2617t1sos1qo8bhtnn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.goride.customer",
+            "certificate_hash": "071701aa39cb48993a1d04376a9d459d077d2172"
+          }
+        },
+        {
+          "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPT2Mf8l0cA-vw2r1wHSVZASslEtI9iI0"
+        },
+        {
+          "current_key": "AIzaSyBRU79o-ZAayrl23eJ9wHIftgrwfvNOLiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1082846160023-0hu6buugngnmg4knnermsgvghebvnph7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kmshopnow.pos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082846160023:android:da5a3757a4124f271cb5d2",
+        "android_client_info": {
+          "package_name": "com.goride.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082846160023-rtkv34egd5aeppfv34uutqqpu8ensmcp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.goride.driver",
+            "certificate_hash": "071701aa39cb48993a1d04376a9d459d077d2172"
+          }
+        },
+        {
+          "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPT2Mf8l0cA-vw2r1wHSVZASslEtI9iI0"
+        },
+        {
+          "current_key": "AIzaSyBRU79o-ZAayrl23eJ9wHIftgrwfvNOLiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1082846160023-0hu6buugngnmg4knnermsgvghebvnph7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kmshopnow.pos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082846160023:android:2686a7475e2dbc9c1cb5d2",
+        "android_client_info": {
+          "package_name": "com.goride.owner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082846160023-ls8nf8o0rlb61uurkta4vtevohocbghe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.goride.owner",
+            "certificate_hash": "071701aa39cb48993a1d04376a9d459d077d2172"
+          }
+        },
+        {
+          "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPT2Mf8l0cA-vw2r1wHSVZASslEtI9iI0"
+        },
+        {
+          "current_key": "AIzaSyBRU79o-ZAayrl23eJ9wHIftgrwfvNOLiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1082846160023-0hu6buugngnmg4knnermsgvghebvnph7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kmshopnow.pos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082846160023:android:c2475ab409d5f9761cb5d2",
+        "android_client_info": {
+          "package_name": "com.zamstudio.jamat_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPT2Mf8l0cA-vw2r1wHSVZASslEtI9iI0"
+        },
+        {
+          "current_key": "AIzaSyBRU79o-ZAayrl23eJ9wHIftgrwfvNOLiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1082846160023-0hu6buugngnmg4knnermsgvghebvnph7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kmshopnow.pos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082846160023:android:74f45a29da650d4a1cb5d2",
+        "android_client_info": {
+          "package_name": "com.zamstudios_kmchat.wa_business"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082846160023-sme7753m0305gkjg0m64tigq1c5pd2bn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zamstudios_kmchat.wa_business",
+            "certificate_hash": "071701aa39cb48993a1d04376a9d459d077d2172"
+          }
+        },
+        {
+          "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPT2Mf8l0cA-vw2r1wHSVZASslEtI9iI0"
+        },
+        {
+          "current_key": "AIzaSyBRU79o-ZAayrl23eJ9wHIftgrwfvNOLiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082846160023-2h3ateog9rocm3echbm76oqi97mri39g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1082846160023-0hu6buugngnmg4knnermsgvghebvnph7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kmshopnow.pos"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
