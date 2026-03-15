@@ -26,7 +26,6 @@ class ProfileScreen extends StatelessWidget {
               letterSpacing: 2,
             )),
         actions: [
-          // SIGN OUT BUTTON
           TextButton.icon(
             onPressed: () => _confirmSignOut(context),
             icon: const Icon(Icons.logout, color: Color(0xFFF72585), size: 18),
@@ -77,7 +76,6 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ── PLAYER CARD ──────────────────────────
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
@@ -94,7 +92,6 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      // Avatar
                       Container(
                         width: 72,
                         height: 72,
@@ -114,8 +111,6 @@ class ProfileScreen extends StatelessWidget {
                             child: Text('🎮', style: TextStyle(fontSize: 32))),
                       ),
                       const SizedBox(height: 10),
-
-                      // Username
                       Text(username,
                           style: const TextStyle(
                             color: Colors.white,
@@ -123,8 +118,6 @@ class ProfileScreen extends StatelessWidget {
                             fontSize: 20,
                           )),
                       const SizedBox(height: 4),
-
-                      // Level
                       Text('LEVEL $level · GAMER',
                           style: const TextStyle(
                             color: Color(0xFF00F5D4),
@@ -133,8 +126,6 @@ class ProfileScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           )),
                       const SizedBox(height: 14),
-
-                      // Game ID — tap to copy
                       GestureDetector(
                         onTap: () {
                           Clipboard.setData(ClipboardData(text: gameId));
@@ -185,8 +176,6 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 16),
-
-                      // XP Bar
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: LinearProgressIndicator(
@@ -207,8 +196,6 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-
-                // ── STATS ────────────────────────────────
                 Row(
                   children: [
                     _statBox('🎮', '$gamesPlayed', 'PLAYED', const Color(0xFF00F5D4)),
@@ -221,8 +208,6 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-
-                // ── BADGES ───────────────────────────────
                 _sectionTitle('BADGES'),
                 const SizedBox(height: 10),
                 Wrap(
@@ -250,8 +235,6 @@ class ProfileScreen extends StatelessWidget {
                   }).toList(),
                 ),
                 const SizedBox(height: 24),
-
-                // ── SIGN OUT BUTTON ──────────────────────
                 GestureDetector(
                   onTap: () => _confirmSignOut(context),
                   child: Container(

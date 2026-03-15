@@ -236,4 +236,53 @@ class FirebaseService {
       default: return 'Authentication failed. Try again.';
     }
   }
+  static Future<Map<String, dynamic>> claimDailyReward() async {
+    if (currentUid.isEmpty) return {'claimed': false};
+
+    final doc = await _db.collection('game_players').doc(currentUid).get();
+    if (!doc.exists) return {'claimed': false};
+
+    final data = doc.data()!;
+    final Timestamp? lastSeen = data['lastSeen'] as Timestamp?;
+    final int streak = data['streak'] ?? 0;
+
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    if (lastSeen != null) {
+      final lastDate = lastSeen.toDate();
+      final lastDay = DateTime(lastDate.year, lastDate.month, lastDate.day);
+
+      if (lastDay == today) {
+        return {'claimed': false};
+      }
+
+      // Streak: if played yesterday continue, else reset
+      final yesterday = today.subtract(const Duration(days: 1));
+      final newStreak = (lastDay == yesterday) ? streak + 1 : 1;
+      final int coinsReward = (50 + (newStreak * 10)).clamp(50, 200);
+
+      await _db.collection('game_players').doc(currentUid).update({
+        'coins': FieldValue.increment(coinsReward),
+        'xp': FieldValue.increment(20),
+        'streak': newStreak,
+        'lastSeen': FieldValue.serverTimestamp(),
+      });
+
+      return {
+        'claimed': true,
+        'coins': coinsReward,
+        'xp': 20,
+        'streak': newStreak,
+      };
+    }
+    await _db.collection('game_players').doc(currentUid).update({
+      'coins': FieldValue.increment(50),
+      'xp': FieldValue.increment(20),
+      'streak': 1,
+      'lastSeen': FieldValue.serverTimestamp(),
+    });
+
+    return {'claimed': true, 'coins': 50, 'xp': 20, 'streak': 1};
+  }
 }

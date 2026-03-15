@@ -143,7 +143,6 @@ class _AuthScreenState extends State<AuthScreen>
       backgroundColor: const Color(0xFF060812),
       body: Stack(
         children: [
-          // ── BACKGROUND ────────────────────────────
           Positioned(
             top: -100,
             right: -100,
@@ -178,8 +177,6 @@ class _AuthScreenState extends State<AuthScreen>
               ),
             ),
           ),
-
-          // ── CONTENT ───────────────────────────────
           SafeArea(
             child: SingleChildScrollView(
               child: Padding(
@@ -188,8 +185,6 @@ class _AuthScreenState extends State<AuthScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 50),
-
-                    // Logo
                     Center(
                       child: Column(
                         children: [
@@ -248,8 +243,6 @@ class _AuthScreenState extends State<AuthScreen>
                       ),
                     ),
                     const SizedBox(height: 40),
-
-                    // ── TOGGLE SIGN IN / SIGN UP ───────
                     Container(
                       height: 48,
                       padding: const EdgeInsets.all(4),
@@ -272,14 +265,10 @@ class _AuthScreenState extends State<AuthScreen>
                       ),
                     ),
                     const SizedBox(height: 28),
-
-                    // ── ERROR / SUCCESS MESSAGE ────────
                     if (_errorMsg != null)
                       _alertBox(_errorMsg!, false),
                     if (_successMsg != null)
                       _alertBox(_successMsg!, true),
-
-                    // ── FORMS ─────────────────────────
                     AnimatedSwitcher(
                       duration: const Duration(milliseconds: 250),
                       child: _isSignIn
@@ -287,8 +276,6 @@ class _AuthScreenState extends State<AuthScreen>
                           : _buildSignUpForm(),
                     ),
                     const SizedBox(height: 24),
-
-                    // ── DIVIDER ───────────────────────
                     Row(
                       children: [
                         Expanded(
@@ -318,8 +305,6 @@ class _AuthScreenState extends State<AuthScreen>
                       ],
                     ),
                     const SizedBox(height: 16),
-
-                    // ── GOOGLE BUTTON ─────────────────
                     _googleBtn(),
                     const SizedBox(height: 40),
                   ],
@@ -327,8 +312,6 @@ class _AuthScreenState extends State<AuthScreen>
               ),
             ),
           ),
-
-          // ── LOADING OVERLAY ───────────────────────
           if (_isLoading)
             Container(
               color: Colors.black.withOpacity(0.6),
@@ -357,8 +340,6 @@ class _AuthScreenState extends State<AuthScreen>
       ),
     );
   }
-
-  // ── SIGN IN FORM ──────────────────────────────────
   Widget _buildSignInForm() {
     return Column(
       key: const ValueKey('signin'),
@@ -403,8 +384,6 @@ class _AuthScreenState extends State<AuthScreen>
       ],
     );
   }
-
-  // ── SIGN UP FORM ──────────────────────────────────
   Widget _buildSignUpForm() {
     return Column(
       key: const ValueKey('signup'),
@@ -418,7 +397,6 @@ class _AuthScreenState extends State<AuthScreen>
           icon: Icons.person_outline,
         ),
         const SizedBox(height: 6),
-        // Game ID hint
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
@@ -479,9 +457,6 @@ class _AuthScreenState extends State<AuthScreen>
       ],
     );
   }
-
-  // ── REUSABLE WIDGETS ──────────────────────────────
-
   Widget _toggleBtn(String label, bool active, VoidCallback onTap) {
     return Expanded(
       child: GestureDetector(

@@ -4,10 +4,6 @@ import '../services/firebase_service.dart';
 import '../models/game.dart';
 import '../models/player.dart';
 import 'game_screen.dart';
-
-// ─────────────────────────────────────────────────────────
-// CHALLENGE SCREEN — Search · Send · Receive Challenges
-// ─────────────────────────────────────────────────────────
 class ChallengeScreen extends StatefulWidget {
   const ChallengeScreen({Key? key}) : super(key: key);
 
@@ -36,8 +32,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
     _searchCtrl.dispose();
     super.dispose();
   }
-
-  // ── SEARCH FOR PLAYER BY GAME ID ──────────────────
   Future<void> _searchPlayer() async {
     final query = _searchCtrl.text.trim().toUpperCase();
     if (query.isEmpty) return;
@@ -71,8 +65,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
       }
     });
   }
-
-  // ── SEND CHALLENGE DIALOG ─────────────────────────
   void _showSendChallengeDialog(Map<String, dynamic> opponent) {
     final List<Game> games = _getSampleGames();
     Game? selectedGame = games.first;
@@ -100,7 +92,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Handle bar
               Center(
                 child: Container(
                   width: 40,
@@ -112,8 +103,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Title
               Row(
                 children: [
                   const Text('⚔️', style: TextStyle(fontSize: 22)),
@@ -140,8 +129,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                 ],
               ),
               const SizedBox(height: 24),
-
-              // Select Game
               const Text('SELECT GAME',
                   style: TextStyle(
                     color: Color(0xFF8892B0),
@@ -198,8 +185,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Score to beat
               const Text('YOUR SCORE TO BEAT',
                   style: TextStyle(
                     color: Color(0xFF8892B0),
@@ -251,8 +236,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Send button
               GestureDetector(
                 onTap: () async {
                   final scoreText = scoreCtrl.text.trim();
@@ -360,10 +343,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
       ),
     );
   }
-
-  // ══════════════════════════════════════════════════
-  // TAB 1 — FIND PLAYER & SEND CHALLENGE
-  // ══════════════════════════════════════════════════
   Widget _buildFindPlayerTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -385,15 +364,15 @@ class _ChallengeScreenState extends State<ChallengeScreen>
               children: [
                 Text('💡', style: TextStyle(fontSize: 18)),
                 SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    'Search any player using their Game ID (e.g. UMER#4821) and send them a challenge!',
-                    style: TextStyle(
-                      color: Color(0xFF8892B0),
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
+                // Expanded(
+                //   child: Text(
+                //     'Search any player using their Game ID (e.g. UMER#4821) and send them a challenge!',
+                //     style: TextStyle(
+                //       color: Color(0xFF8892B0),
+                //       fontSize: 12,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -513,8 +492,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                 ],
               ),
             ),
-
-          // Found player card
           if (_foundPlayer != null) _buildFoundPlayerCard(_foundPlayer!),
         ],
       ),
@@ -544,7 +521,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
       ),
       child: Column(
         children: [
-          // Avatar + name
           Row(
             children: [
               Container(
@@ -596,7 +572,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                   ],
                 ),
               ),
-              // Online indicator
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -635,8 +610,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
             ],
           ),
           const SizedBox(height: 16),
-
-          // Stats row
           Row(
             children: [
               _miniStat('LEVEL', '$level', const Color(0xFF00F5D4)),
@@ -669,8 +642,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
             ),
           ],
           const SizedBox(height: 16),
-
-          // Challenge button
           GestureDetector(
             onTap: () => _showSendChallengeDialog(player),
             child: Container(
@@ -711,10 +682,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
       ),
     );
   }
-
-  // ══════════════════════════════════════════════════
-  // TAB 2 — INCOMING CHALLENGES
-  // ══════════════════════════════════════════════════
   Widget _buildIncomingTab() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseService.getIncomingChallenges(),
@@ -850,8 +817,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
             ],
           ),
           const SizedBox(height: 14),
-
-          // Challenge details
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -912,8 +877,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
             ),
           ),
           const SizedBox(height: 12),
-
-          // Accept — opens the game directly
           Row(
             children: [
               Expanded(
@@ -968,8 +931,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
       ),
     );
   }
-
-  // ── ACCEPT CHALLENGE → OPEN GAME ──────────────────
   Future<void> _acceptChallenge(
       Map<String, dynamic> data, String challengeId) async {
     // Mark as accepted
@@ -1001,8 +962,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
       );
     }
   }
-
-  // ── DECLINE CHALLENGE ─────────────────────────────
   Future<void> _declineChallenge(String challengeId) async {
     await FirebaseFirestore.instance
         .collection('challenges')
@@ -1015,8 +974,6 @@ class _ChallengeScreenState extends State<ChallengeScreen>
       );
     }
   }
-
-  // ── HELPERS ───────────────────────────────────────
   Widget _miniStat(String label, String value, Color color) {
     return Expanded(
       child: Column(
