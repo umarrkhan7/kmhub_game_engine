@@ -1,5 +1,5 @@
 name: game_module
-description: ARCADE HUB 
+description: ARCADE HUB
 
 publish_to: 'none'
 
@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # WebView for in-app game loading
   webview_flutter: ^4.7.0
   firebase_core: ^4.5.0
   firebase_auth: ^6.2.0
@@ -21,24 +20,25 @@ dependencies:
   permission_handler: ^12.0.1
   flutter_contacts: ^1.1.9+1
   google_sign_in: ^5.4.4
-
-
-  # Icons
+  flutter_local_notifications: ^21.0.0
   cupertino_icons: ^1.0.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
-
   assets:
     - assets/games.json
+    - assets/icons/app_icon.png
 
-  # Optional: Add custom fonts if desired
-  # fonts:
-  #   - family: Orbitron
-  #     fonts:
-  #       - asset: assets/fonts/Orbitron-Bold.ttf
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#050A18"
+  adaptive_icon_foreground: "assets/icons/app_icon.png"
