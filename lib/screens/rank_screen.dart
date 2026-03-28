@@ -11,6 +11,13 @@ class RanksScreen extends StatefulWidget {
 
 class RanksScreenState extends State<RanksScreen>
     with SingleTickerProviderStateMixin {
+  static const bg      = Color(0xFF0A1A0F);
+  static const surface = Color(0xFF122A1A);
+  static const primary = Color(0xFF3A9A5C);
+  static const olive   = Color(0xFFA8C878);
+  static const muted   = Color(0xFF7AAF8A);
+  static const dark    = Color(0xFF1F5C35);
+
   late TabController tabController;
 
   final List<Map<String, String>> gameCategories = [
@@ -39,29 +46,32 @@ class RanksScreenState extends State<RanksScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF050A18),
+      backgroundColor: bg,
+
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0D1F3C),
+        backgroundColor: surface,
         elevation: 0,
+
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFFFD700), size: 18),
+          icon: Icon(Icons.arrow_back_ios, color: olive, size: 18),
           onPressed: () => Navigator.pop(context),
         ),
+
         title: const Text(
           'RANKINGS',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w900,
-            fontSize: 16,
             letterSpacing: 2,
           ),
         ),
+
         bottom: TabBar(
           controller: tabController,
           isScrollable: true,
-          labelColor: const Color(0xFFFFD700),
-          unselectedLabelColor: const Color(0xFF8BA3CC),
-          indicatorColor: const Color(0xFFFFD700),
+          labelColor: olive,
+          unselectedLabelColor: muted,
+          indicatorColor: olive,
           indicatorWeight: 2,
           labelStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 11),
           tabs: gameCategories.map((g) => Tab(
@@ -75,10 +85,19 @@ class RanksScreenState extends State<RanksScreen>
           )).toList(),
         ),
       ),
+
       body: TabBarView(
         controller: tabController,
         children: gameCategories.map((g) =>
-          LeaderboardTab(gameTitle: g['title']!, gameIcon: g['icon']!)
+            LeaderboardTab(
+              gameTitle: g['title']!,
+              gameIcon: g['icon']!,
+              bg: bg,
+              surface: surface,
+              primary: primary,
+              olive: olive,
+              muted: muted,
+            )
         ).toList(),
       ),
     );
@@ -89,10 +108,21 @@ class LeaderboardTab extends StatelessWidget {
   final String gameTitle;
   final String gameIcon;
 
+  final Color bg;
+  final Color surface;
+  final Color primary;
+  final Color olive;
+  final Color muted;
+
   const LeaderboardTab({
     Key? key,
     required this.gameTitle,
     required this.gameIcon,
+    required this.bg,
+    required this.surface,
+    required this.primary,
+    required this.olive,
+    required this.muted,
   }) : super(key: key);
 
   @override
@@ -100,9 +130,10 @@ class LeaderboardTab extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseService.getLeaderboard(gameTitle),
       builder: (context, snapshot) {
+
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(color: Color(0xFFFFD700)),
+          return Center(
+            child: CircularProgressIndicator(color: olive),
           );
         }
 
@@ -127,8 +158,8 @@ class LeaderboardTab extends StatelessWidget {
                 Text(
                   'Be the first to play $gameTitle\nand claim the #1 spot!',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Color(0xFF8BA3CC),
+                  style: TextStyle(
+                    color: muted,
                     fontSize: 13,
                   ),
                 ),
@@ -140,14 +171,16 @@ class LeaderboardTab extends StatelessWidget {
         final myUid = FirebaseService.currentUid;
 
         return ListView.builder(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          padding: const EdgeInsets.all(16),
           itemCount: docs.length,
           itemBuilder: (context, index) {
             final data = docs[index].data() as Map<String, dynamic>;
+
             final rank = index + 1;
             final isMe = data['uid'] == myUid;
             final username = data['username'] ?? 'Player';
             final score = data['score'] ?? 0;
+
             return buildRankCard(rank, username, score, isMe);
           },
         );
@@ -158,28 +191,48 @@ class LeaderboardTab extends StatelessWidget {
   Widget buildRankCard(int rank, String username, int score, bool isMe) {
     Color rankColor;
     String rankIcon;
-    if (rank == 1) { rankColor = const Color(0xFFFFD700); rankIcon = '🥇'; }
-    else if (rank == 2) { rankColor = const Color(0xFFC0C0C0); rankIcon = '🥈'; }
-    else if (rank == 3) { rankColor = const Color(0xFFCD7F32); rankIcon = '🥉'; }
-    else { rankColor = const Color(0xFF8BA3CC); rankIcon = '#$rank'; }
+
+    if (rank == 1) {
+      rankColor = Colors.amber;
+      rankIcon = '🥇';
+    } else if (rank == 2) {
+      rankColor = Colors.grey;
+      rankIcon = '🥈';
+    } else if (rank == 3) {
+      rankColor = Colors.brown;
+      rankIcon = '🥉';
+    } else {
+      rankColor = muted;
+      rankIcon = '#$rank';
+    }
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+
       decoration: BoxDecoration(
-        color: isMe
-            ? const Color(0xFF0066FF).withOpacity(0.08)
-            : const Color(0xFF0D1F3C),
+        color: surface,
         borderRadius: BorderRadius.circular(14),
+
         border: Border.all(
           color: isMe
-              ? const Color(0xFFFFD700).withOpacity(0.3)
+              ? olive.withOpacity(0.5)
               : rank <= 3
-                  ? rankColor.withOpacity(0.2)
-                  : const Color(0xFF0066FF).withOpacity(0.1),
+              ? rankColor.withOpacity(0.3)
+              : primary.withOpacity(0.15),
           width: isMe ? 1.5 : 1,
         ),
+
+        boxShadow: isMe
+            ? [
+          BoxShadow(
+            color: primary.withOpacity(0.4),
+            blurRadius: 12,
+          )
+        ]
+            : [],
       ),
+
       child: Row(
         children: [
           SizedBox(
@@ -187,70 +240,73 @@ class LeaderboardTab extends StatelessWidget {
             child: rank <= 3
                 ? Text(rankIcon, style: const TextStyle(fontSize: 22))
                 : Text(
-                    '#$rank',
-                    style: TextStyle(
-                      color: rankColor,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 13,
-                    ),
-                  ),
+              '#$rank',
+              style: TextStyle(
+                color: rankColor,
+                fontWeight: FontWeight.w800,
+                fontSize: 13,
+              ),
+            ),
           ),
+
           const SizedBox(width: 12),
           Container(
-            width: 40,
-            height: 40,
+            width: 42,
+            height: 42,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: isMe
-                    ? [const Color(0xFF0066FF), const Color(0xFF003899)]
-                    : [const Color(0xFF0D1F3C), const Color(0xFF1A2A4A)],
+              gradient: const LinearGradient(
+                colors: [Color(0xFF3A9A5C), Color(0xFF1F5C35)],
               ),
               shape: BoxShape.circle,
-              border: Border.all(
-                color: isMe
-                    ? const Color(0xFFFFD700).withOpacity(0.4)
-                    : const Color(0xFF0066FF).withOpacity(0.2),
-              ),
+              boxShadow: [
+                BoxShadow(
+                  color: primary.withOpacity(0.5),
+                  blurRadius: 10,
+                )
+              ],
             ),
             child: Center(
               child: Text(
                 username.isNotEmpty ? username[0].toUpperCase() : '?',
-                style: TextStyle(
-                  color: isMe ? const Color(0xFFFFD700) : const Color(0xFF8BA3CC),
+                style: const TextStyle(
+                  color: Colors.white,
                   fontWeight: FontWeight.w900,
                   fontSize: 16,
                 ),
               ),
             ),
           ),
+
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 Row(
                   children: [
                     Text(
                       username,
                       style: TextStyle(
-                        color: isMe ? const Color(0xFFFFD700) : Colors.white,
+                        color: isMe ? olive : Colors.white,
                         fontWeight: FontWeight.w700,
                         fontSize: 14,
                       ),
                     ),
+
                     if (isMe) ...[
                       const SizedBox(width: 6),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFFD700).withOpacity(0.12),
+                          color: olive.withOpacity(0.15),
                           borderRadius: BorderRadius.circular(6),
-                          border: Border.all(color: const Color(0xFFFFD700).withOpacity(0.3)),
+                          border: Border.all(color: olive.withOpacity(0.4)),
                         ),
-                        child: const Text(
+                        child: Text(
                           'YOU',
                           style: TextStyle(
-                            color: Color(0xFFFFD700),
+                            color: olive,
                             fontSize: 9,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1,
@@ -260,27 +316,30 @@ class LeaderboardTab extends StatelessWidget {
                     ],
                   ],
                 ),
+
                 Text(
                   gameTitle,
-                  style: const TextStyle(color: Color(0xFF8BA3CC), fontSize: 10),
+                  style: TextStyle(color: muted, fontSize: 10),
                 ),
               ],
             ),
           ),
+
+          /// 🔥 SCORE
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 '$score',
                 style: TextStyle(
-                  color: rankColor,
+                  color: olive,
                   fontWeight: FontWeight.w900,
                   fontSize: 20,
                 ),
               ),
-              const Text(
+              Text(
                 'pts',
-                style: TextStyle(color: Color(0xFF8BA3CC), fontSize: 10),
+                style: TextStyle(color: muted, fontSize: 10),
               ),
             ],
           ),

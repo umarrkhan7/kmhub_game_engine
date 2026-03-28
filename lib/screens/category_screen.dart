@@ -18,19 +18,24 @@ class CategoryScreen extends StatelessWidget {
     required this.player,
   }) : super(key: key);
 
+  static const bg      = Color(0xFF0A1A0F);
+  static const surface = Color(0xFF122A1A);
+  static const primary = Color(0xFF3A9A5C);
+  static const olive   = Color(0xFFA8C878);
+  static const dark    = Color(0xFF1F5C35);
+  static const muted   = Color(0xFF7AAF8A);
+
   @override
   Widget build(BuildContext context) {
-    final filteredGames =
-        games.where((game) => game.category == category).toList();
+    final filteredGames = games.where((game) => game.category == category).toList();
 
     return Scaffold(
-      backgroundColor: const Color(0xFF060812),
+      backgroundColor: bg,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0D1224),
+        backgroundColor: surface,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios,
-              color: Color(0xFF00F5D4), size: 18),
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFA8C878), size: 18),
           onPressed: () => Navigator.pop(context),
         ),
         title: Row(
@@ -38,12 +43,12 @@ class CategoryScreen extends StatelessWidget {
             Text(categoryIcon, style: const TextStyle(fontSize: 20)),
             const SizedBox(width: 8),
             Text(
-              category,
+              category.toUpperCase(),
               style: const TextStyle(
                 color: Colors.white,
-                fontWeight: FontWeight.w800,
-                fontSize: 18,
-                letterSpacing: 1,
+                fontWeight: FontWeight.w900,
+                fontSize: 16,
+                letterSpacing: 2,
               ),
             ),
           ],
@@ -51,20 +56,19 @@ class CategoryScreen extends StatelessWidget {
         actions: [
           Container(
             margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
-              color: const Color(0xFF00F5D4).withOpacity(0.08),
+              color: primary.withOpacity(0.12),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                  color: const Color(0xFF00F5D4).withOpacity(0.2)),
+              border: Border.all(color: olive.withOpacity(0.3)),
             ),
             child: Center(
               child: Text(
                 '${filteredGames.length} Games',
                 style: const TextStyle(
-                  color: Color(0xFF00F5D4),
+                  color: Color(0xFFA8C878),
                   fontSize: 11,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
@@ -72,16 +76,30 @@ class CategoryScreen extends StatelessWidget {
         ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
-          child: Container(
-              height: 1,
-              color: const Color(0xFF00F5D4).withOpacity(0.15)),
+          child: Container(height: 1, color: olive.withOpacity(0.15)),
         ),
       ),
       body: filteredGames.isEmpty
-          ? const Center(
-              child: Text(
-                'No games in this category yet.',
-                style: TextStyle(color: Color(0xFF8892B0), fontSize: 14),
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(categoryIcon, style: const TextStyle(fontSize: 56)),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'No games yet',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'No games in this category yet.',
+                    style: TextStyle(color: muted, fontSize: 13),
+                  ),
+                ],
               ),
             )
           : Padding(
@@ -98,17 +116,12 @@ class CategoryScreen extends StatelessWidget {
                   final game = filteredGames[index];
                   return GameCard(
                     game: game,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => GameScreen(
-                            game: game,
-                            player: player,
-                          ),
-                        ),
-                      );
-                    },
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) => GameScreen(game: game, player: player),
+                      ),
+                    ),
                   );
                 },
               ),

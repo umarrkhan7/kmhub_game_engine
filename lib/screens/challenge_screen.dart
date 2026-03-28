@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../services/firebase_service.dart';
 import '../models/game.dart';
 import '../models/player.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'game_screen.dart';
 
 class ChallengeScreen extends StatefulWidget {
@@ -20,20 +22,30 @@ class ChallengeScreenState extends State<ChallengeScreen>
   bool isSearching = false;
   Map<String, dynamic>? foundPlayer;
   String? searchError;
+  List<Game> allGames = [];
 
-  static const bg      = Color(0xFF050A18);
-  static const surface = Color(0xFF0D1F3C);
-  static const card    = Color(0xFF0A1628);
-  static const primary = Color(0xFF0066FF);
-  static const gold    = Color(0xFFFFD700);
-  static const goldDim = Color(0xFFE6A800);
-  static const muted   = Color(0xFF8BA3CC);
-  static const red     = Color(0xFFFF4C6A);
+  static const bg      = Color(0xFF0A1A0F);
+  static const surface = Color(0xFF122A1A);
+  static const card    = Color(0xFF0D2015);
+  static const primary = Color(0xFF3A9A5C);
+  static const olive   = Color(0xFFA8C878);
+  static const dark    = Color(0xFF1F5C35);
+  static const muted   = Color(0xFF7AAF8A);
+  static const red     = Color(0xFFFF4C4C);
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 2, vsync: this);
+    loadGames();
+  }
+
+  Future<void> loadGames() async {
+    final String jsonStr = await rootBundle.loadString('assets/games.json');
+    final List<dynamic> data = json.decode(jsonStr);
+    setState(() {
+      allGames = data.map((e) => Game.fromJson(e)).toList();
+    });
   }
 
   @override
@@ -81,7 +93,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
           decoration: BoxDecoration(
             color: surface,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-            border: Border.all(color: gold.withOpacity(0.15)),
+            border: Border.all(color: olive.withOpacity(0.2)),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -131,11 +143,9 @@ class ChallengeScreenState extends State<ChallengeScreen>
                         margin: const EdgeInsets.only(right: 8),
                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                         decoration: BoxDecoration(
-                          color: selected ? gold.withOpacity(0.12) : card,
+                          color: selected ? primary.withOpacity(0.15) : card,
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: selected ? gold : gold.withOpacity(0.1),
-                          ),
+                          border: Border.all(color: selected ? olive : olive.withOpacity(0.15)),
                         ),
                         child: Row(
                           children: [
@@ -143,7 +153,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                             const SizedBox(width: 6),
                             Text(g.title,
                               style: TextStyle(
-                                color: selected ? gold : muted,
+                                color: selected ? olive : muted,
                                 fontSize: 11, fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -165,16 +175,16 @@ class ChallengeScreenState extends State<ChallengeScreen>
                 decoration: InputDecoration(
                   hintText: 'e.g. 4200',
                   hintStyle: TextStyle(color: muted.withOpacity(0.4)),
-                  prefixIcon: const Icon(Icons.emoji_events, color: Color(0xFFFFD700), size: 18),
+                  prefixIcon: Icon(Icons.emoji_events, color: olive, size: 18),
                   filled: true,
                   fillColor: card,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: primary.withOpacity(0.12))),
+                      borderSide: BorderSide(color: primary.withOpacity(0.15))),
                   enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: primary.withOpacity(0.12))),
+                      borderSide: BorderSide(color: primary.withOpacity(0.15))),
                   focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: gold.withOpacity(0.6), width: 1.5)),
+                      borderSide: BorderSide(color: olive.withOpacity(0.6), width: 1.5)),
                 ),
               ),
               const SizedBox(height: 8),
@@ -205,9 +215,11 @@ class ChallengeScreenState extends State<ChallengeScreen>
                   width: double.infinity,
                   height: 52,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [Color(0xFFFFD700), Color(0xFFE6A800)]),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF3A9A5C), Color(0xFF1F5C35)],
+                    ),
                     borderRadius: BorderRadius.circular(12),
-                    boxShadow: [BoxShadow(color: gold.withOpacity(0.3), blurRadius: 16, offset: const Offset(0, 6))],
+                    boxShadow: [BoxShadow(color: primary.withOpacity(0.4), blurRadius: 16, offset: const Offset(0, 6))],
                   ),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -215,7 +227,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                       Text('⚔️', style: TextStyle(fontSize: 16)),
                       SizedBox(width: 8),
                       Text('SEND CHALLENGE',
-                        style: TextStyle(color: Color(0xFF050A18),
+                        style: TextStyle(color: Colors.white,
                             fontWeight: FontWeight.w900, fontSize: 14, letterSpacing: 1.5)),
                     ],
                   ),
@@ -236,7 +248,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
         backgroundColor: surface,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFFFD700), size: 18),
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFA8C878), size: 18),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text('CHALLENGES',
@@ -244,9 +256,9 @@ class ChallengeScreenState extends State<ChallengeScreen>
               fontSize: 16, letterSpacing: 2)),
         bottom: TabBar(
           controller: tabController,
-          labelColor: gold,
+          labelColor: olive,
           unselectedLabelColor: muted,
-          indicatorColor: gold,
+          indicatorColor: olive,
           indicatorWeight: 2,
           labelStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 12, letterSpacing: 1),
           tabs: const [
@@ -272,17 +284,17 @@ class ChallengeScreenState extends State<ChallengeScreen>
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: primary.withOpacity(0.06),
+              color: dark.withOpacity(0.4),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: primary.withOpacity(0.15)),
+              border: Border.all(color: olive.withOpacity(0.2)),
             ),
             child: Row(
               children: [
                 const Text('💡', style: TextStyle(fontSize: 18)),
                 const SizedBox(width: 10),
                 Expanded(child: Text(
-                  'Search any player using their Game ID ',
-                  style: TextStyle(color: muted, fontSize: 12),
+                  'Search any player using their Game ID e.g. UMER#4821',
+                  style: TextStyle(color: olive.withOpacity(0.8), fontSize: 12),
                 )),
               ],
             ),
@@ -304,7 +316,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                     hintText: 'e.g. Name#4821',
                     hintStyle: TextStyle(color: muted.withOpacity(0.4),
                         fontWeight: FontWeight.w500, letterSpacing: 0),
-                    prefixIcon: Icon(Icons.search, color: muted, size: 20),
+                    prefixIcon: Icon(Icons.search, color: primary, size: 20),
                     filled: true,
                     fillColor: surface,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -313,7 +325,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                     enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(color: primary.withOpacity(0.15))),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: gold.withOpacity(0.6), width: 1.5)),
+                        borderSide: BorderSide(color: olive.withOpacity(0.6), width: 1.5)),
                   ),
                 ),
               ),
@@ -323,14 +335,16 @@ class ChallengeScreenState extends State<ChallengeScreen>
                 child: Container(
                   height: 52, width: 52,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [Color(0xFFFFD700), Color(0xFFE6A800)]),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF3A9A5C), Color(0xFF1F5C35)],
+                    ),
                     borderRadius: BorderRadius.circular(12),
-                    boxShadow: [BoxShadow(color: gold.withOpacity(0.25), blurRadius: 10)],
+                    boxShadow: [BoxShadow(color: primary.withOpacity(0.3), blurRadius: 10)],
                   ),
                   child: isSearching
                     ? const Center(child: SizedBox(width: 20, height: 20,
-                        child: CircularProgressIndicator(color: Color(0xFF050A18), strokeWidth: 2)))
-                    : const Icon(Icons.search, color: Color(0xFF050A18), size: 22),
+                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)))
+                    : const Icon(Icons.search, color: Colors.white, size: 22),
                 ),
               ),
             ],
@@ -360,22 +374,22 @@ class ChallengeScreenState extends State<ChallengeScreen>
   }
 
   Widget buildFoundPlayerCard(Map<String, dynamic> player) {
-    final xp = player['xp'] ?? 0;
-    final level = player['level'] ?? 1;
-    final wins = player['wins'] ?? 0;
+    final xp          = player['xp']          ?? 0;
+    final level       = player['level']       ?? 1;
+    final wins        = player['wins']        ?? 0;
     final gamesPlayed = player['gamesPlayed'] ?? 0;
-    final badges = List<String>.from(player['badges'] ?? []);
+    final badges      = List<String>.from(player['badges'] ?? []);
 
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [primary.withOpacity(0.06), bg],
+          colors: [primary.withOpacity(0.08), bg],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: gold.withOpacity(0.2)),
+        border: Border.all(color: olive.withOpacity(0.25)),
       ),
       child: Column(
         children: [
@@ -384,7 +398,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
               Container(
                 width: 56, height: 56,
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(colors: [Color(0xFF0066FF), Color(0xFF003899)]),
+                  gradient: LinearGradient(colors: [Color(0xFF3A9A5C), Color(0xFF1F5C35)]),
                   shape: BoxShape.circle,
                 ),
                 child: const Center(child: Text('🎮', style: TextStyle(fontSize: 26))),
@@ -400,12 +414,12 @@ class ChallengeScreenState extends State<ChallengeScreen>
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                       decoration: BoxDecoration(
-                        color: gold.withOpacity(0.08),
+                        color: olive.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: gold.withOpacity(0.3)),
+                        border: Border.all(color: olive.withOpacity(0.35)),
                       ),
                       child: Text(player['gameId'] ?? '',
-                        style: const TextStyle(color: Color(0xFFFFD700),
+                        style: TextStyle(color: olive,
                             fontWeight: FontWeight.w800, fontSize: 11, letterSpacing: 1)),
                     ),
                   ],
@@ -445,9 +459,9 @@ class ChallengeScreenState extends State<ChallengeScreen>
           Row(
             children: [
               miniStat('LEVEL', '$level', primary),
-              miniStat('XP', '$xp', const Color(0xFFB48EFF)),
-              miniStat('WINS', '$wins', gold),
-              miniStat('PLAYED', '$gamesPlayed', Colors.orange),
+              miniStat('XP', '$xp', olive),
+              miniStat('WINS', '$wins', const Color(0xFF4ADE80)),
+              miniStat('PLAYED', '$gamesPlayed', muted),
             ],
           ),
           if (badges.isNotEmpty) ...[
@@ -457,11 +471,11 @@ class ChallengeScreenState extends State<ChallengeScreen>
               children: badges.take(3).map((b) => Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: gold.withOpacity(0.08),
+                  color: dark.withOpacity(0.5),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: gold.withOpacity(0.2)),
+                  border: Border.all(color: olive.withOpacity(0.25)),
                 ),
-                child: Text(b, style: const TextStyle(color: Color(0xFFFFD700), fontSize: 10)),
+                child: Text(b, style: TextStyle(color: olive, fontSize: 10)),
               )).toList(),
             ),
           ],
@@ -472,9 +486,11 @@ class ChallengeScreenState extends State<ChallengeScreen>
               width: double.infinity,
               height: 48,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: [Color(0xFFFFD700), Color(0xFFE6A800)]),
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF3A9A5C), Color(0xFF1F5C35)],
+                ),
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [BoxShadow(color: gold.withOpacity(0.25), blurRadius: 12, offset: const Offset(0, 4))],
+                boxShadow: [BoxShadow(color: primary.withOpacity(0.35), blurRadius: 12, offset: const Offset(0, 4))],
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -483,7 +499,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                   const SizedBox(width: 8),
                   Text(
                     'CHALLENGE ${(player['username'] ?? '').toString().toUpperCase()}',
-                    style: const TextStyle(color: Color(0xFF050A18),
+                    style: const TextStyle(color: Colors.white,
                         fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 1),
                   ),
                 ],
@@ -500,7 +516,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
       stream: FirebaseService.getIncomingChallenges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator(color: Color(0xFFFFD700)));
+          return Center(child: CircularProgressIndicator(color: primary));
         }
         final docs = snapshot.data?.docs ?? [];
         if (docs.isEmpty) {
@@ -559,7 +575,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
               Container(
                 width: 44, height: 44,
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(colors: [Color(0xFF0066FF), Color(0xFF003899)]),
+                  gradient: LinearGradient(colors: [Color(0xFF3A9A5C), Color(0xFF1F5C35)]),
                   shape: BoxShape.circle,
                 ),
                 child: const Center(child: Text('⚔️', style: TextStyle(fontSize: 20))),
@@ -574,7 +590,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                         style: const TextStyle(fontSize: 13),
                         children: [
                           TextSpan(text: fromUsername,
-                            style: const TextStyle(color: Color(0xFFFFD700), fontWeight: FontWeight.w800)),
+                            style: TextStyle(color: olive, fontWeight: FontWeight.w800)),
                           const TextSpan(text: ' challenged you!',
                             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
                         ],
@@ -610,7 +626,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                     ],
                   ),
                 ),
-                Container(width: 1, height: 36, color: gold.withOpacity(0.1)),
+                Container(width: 1, height: 36, color: olive.withOpacity(0.15)),
                 const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -618,7 +634,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                     Text('SCORE TO BEAT', style: TextStyle(color: muted, fontSize: 9, letterSpacing: 1)),
                     const SizedBox(height: 2),
                     Text('$scoreToBeat',
-                      style: const TextStyle(color: Color(0xFFFFD700),
+                      style: TextStyle(color: olive,
                           fontWeight: FontWeight.w900, fontSize: 20)),
                   ],
                 ),
@@ -634,7 +650,9 @@ class ChallengeScreenState extends State<ChallengeScreen>
                   child: Container(
                     height: 44,
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [Color(0xFFFFD700), Color(0xFFE6A800)]),
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF3A9A5C), Color(0xFF1F5C35)],
+                      ),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Row(
@@ -643,7 +661,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                         Text('🎮', style: TextStyle(fontSize: 14)),
                         SizedBox(width: 6),
                         Text('ACCEPT & PLAY',
-                          style: TextStyle(color: Color(0xFF050A18),
+                          style: TextStyle(color: Colors.white,
                               fontWeight: FontWeight.w900, fontSize: 12, letterSpacing: 1)),
                       ],
                     ),
@@ -660,7 +678,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: red.withOpacity(0.3)),
                   ),
-                  child: const Icon(Icons.close, color: Color(0xFFFF4C6A), size: 18),
+                  child: Icon(Icons.close, color: red, size: 18),
                 ),
               ),
             ],
@@ -712,18 +730,15 @@ class ChallengeScreenState extends State<ChallengeScreen>
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: BorderSide(color: success ? gold : red),
+        side: BorderSide(color: success ? primary : red),
       ),
     );
   }
 
   List<Game> getSampleGames() {
-    return [
-      Game(title: 'Moto X3M',       url: 'https://poki.com/en/g/moto-x3m',           icon: '🏍️', category: 'Racing',   isHot: true),
-      Game(title: 'Subway Surfers', url: 'https://poki.com/en/g/subway-surfers',      icon: '🏃',  category: 'Action',   isHot: true),
-      Game(title: '8 Ball Pool',    url: 'https://www.miniclip.com/games/8-ball-pool', icon: '🎱', category: 'Sports'),
-      Game(title: 'Chess',          url: 'https://www.chess.com/play/online',          icon: '♟️', category: 'Strategy'),
-      Game(title: 'Knife Hit',      url: 'https://poki.com/en/g/knife-hit',            icon: '🔪', category: 'Casual'),
+    return allGames.isNotEmpty ? allGames : [
+      Game(title: 'Moto X3M',       url: 'https://poki.com/en/g/moto-x3m',  icon: '🏍️', category: 'Racing', isHot: true),
+      Game(title: 'Subway Surfers', url: 'https://poki.com/en/g/subway-surfers', icon: '🏃', category: 'Action', isHot: true),
     ];
   }
 }

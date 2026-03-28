@@ -83,10 +83,10 @@ class NotificationService {
     );
 
    await localNotifications.show(
-  id: id,           // ← named
-  title: title,     // ← named
-  body: body,       // ← named
-  notificationDetails: const NotificationDetails(android: androidDetails),  // ← named
+  id: id,         
+  title: title,     
+  body: body,     
+  notificationDetails: const NotificationDetails(android: androidDetails),  
 );
   }
 
