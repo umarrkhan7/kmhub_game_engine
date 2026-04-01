@@ -293,7 +293,7 @@ class ChallengeScreenState extends State<ChallengeScreen>
                 const Text('💡', style: TextStyle(fontSize: 18)),
                 const SizedBox(width: 10),
                 Expanded(child: Text(
-                  'Search any player using their Game ID e.g. UMER#4821',
+                  'Search any player using their Game ID',
                   style: TextStyle(color: olive.withOpacity(0.8), fontSize: 12),
                 )),
               ],
